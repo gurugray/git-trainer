@@ -10,7 +10,7 @@ function gitCommander(repo) {
             },
 
             'add': function(options) {
-                repo.add(''+options[0]);
+                repo.add();
             },
 
             'commit': function(options) {
@@ -67,7 +67,7 @@ function gitCommander(repo) {
         };
 
     function _run(commandStr) {
-        
+
         if (!commandStr.indexOf('git ')) {
             var options = commandStr.substr('git '.length).split(' '),
                 command = options.shift();
