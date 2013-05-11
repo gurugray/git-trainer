@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>simple git-trainer</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    <input id="commandline" class="commandLine" spellcheck="false" autofocus="true" />
+    <div class="demo"></div>
+
+    <script src="jquery-2.0.0.min.js"></script>
+    <script src="underscore-min.js"></script>
+    <script src="d3.min.js"></script>
+    <script src="sha1.js"></script>
+
+    <script src="repo.js"></script>
+    <script src="graph.js"></script>
+    <script src="command-line.js"></script>
+    <script src="git-commander.js"></script>
+
+    <script>
+        var myRepo = new Repo(),
+            myGraph = new Graph('.demo', window.innerWidth, window.innerHeight-100),
+            commanline = new CommandLine('#commandline');
+            myCommander = new gitCommander(myRepo),
+
+
+        $('body').bind('command-entered', function(e) {
+            myCommander.run(commanline.getCurrent());
+            myGraph.dataUpdate(myRepo.getData());
+        });
+
+
+        $(document).on('dblclick', '.node', function(e) {
+            $('#commandline').val($('#commandline').val()+$(e.target).attr('data-oid'));
+            $('#commandline').focus();
+        });
+
+    </script>
+  </body>
+</html>
