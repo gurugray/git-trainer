@@ -5,8 +5,9 @@ function gitCommander(repo) {
             'branch': function(options) {
                 if ( '-d' == options[0] ) {
                     repo.branchRemove(options[1]);
+                } else {
+                    repo.branch(options[0]);
                 }
-                repo.branch(options[0]);
             },
 
             'add': function(options) {
