@@ -1,4 +1,4 @@
-## Simple visualization tool to teaching git
+## Simple visualization tool for teaching git
 
 Default setup [git-init.ru](http://io.git-init.ru/git-trainer/)
 
@@ -21,3 +21,7 @@ git cherry-pick HASH #just for demo
 
 git revert HASH  #just for demo
 ````
+
+
+###CC-BY Attribution Requirement
+All materials in this repository are licensed under a [Creative Commons Attribution 3.0 License](http://creativecommons.org/licenses/by/3.0/).
