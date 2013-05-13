@@ -45,16 +45,16 @@ function gitCommander(repo) {
             },
 
             'ci': function(options) {
-                repo.add(options[0]);
+                repo.add();
                 repo.commit();
             },
 
             'revert': function(options) {
-                repo.revert(options[0]);
+                repo.revert();
             },
 
             'cherry-pick': function(options) {
-                repo.cherryPick(options[0]);
+                repo.cherryPick();
             },
 
             'merge': function(options) {
