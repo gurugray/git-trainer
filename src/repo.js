@@ -132,6 +132,11 @@ function Repo() {
     };
 
     this.rebase = function (onto) {
+
+        if (_canFF(HEAD, onto) > 0) {
+            _self.merge([onto], false);
+        }
+
         var oidsB = _getParents(branches[HEAD]),
             oidsO = _getParents(branches[onto]),
             common = _.intersection(oidsB, oidsO),
@@ -146,6 +151,8 @@ function Repo() {
                 _self.commit();
             });
         }
+
+        return true;
     };
 
     this._findDead = function() {
