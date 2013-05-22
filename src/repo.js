@@ -55,12 +55,19 @@ function Repo() {
 
 
     this.branch = function(name){
-        if (branches[name]) {
-            return false;
-        } else {
+        var args = Array.prototype.slice.call(arguments)[0];
+        if (branches[name]) return false;
+
+        if (args.length == 1) {
             branches[name] = branches[HEAD];
             return true;
         }
+        if (args.length == 2) {
+            branches[args[0]] = args[1];
+            return true;
+        }
+
+        return false;
     };
 
     this.branchRemove = function(name){

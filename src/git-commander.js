@@ -6,7 +6,7 @@ function gitCommander(repo) {
                 if ( '-d' == options[0] ) {
                     repo.branchRemove(options[1]);
                 } else {
-                    repo.branch(options[0]);
+                    repo.branch(options);
                 }
             },
 
