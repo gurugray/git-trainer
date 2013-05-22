@@ -95,8 +95,8 @@ svg .nodeTextDead
     padding: 3px 25px 3px 25px;
 
     -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-        box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
 
     width: 100%;
 
