@@ -95,8 +95,8 @@ function Repo() {
             var mFF = _canFF(HEAD, branchNames[0]);
 
             if ( mFF == 1) {
-                branches[branchNames[0]] = branches[HEAD];
-                return true;
+                //allready up to date
+                return false;
             } else if (mFF == 2) {
                 branches[HEAD] = branches[branchNames[0]];
                 return true;
