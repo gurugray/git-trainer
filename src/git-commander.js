@@ -15,6 +15,9 @@ function gitCommander(repo) {
             },
 
             'commit': function(options) {
+                if ( '-a' == options[0] ) {
+                    repo.add();
+                }
                 repo.commit();
             },
 
