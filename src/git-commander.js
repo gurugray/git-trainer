@@ -61,7 +61,10 @@ function gitCommander(repo) {
             },
 
             'merge': function(options) {
-                repo.merge(options);
+                repo.merge(
+                    _.without(options, '--no-ff'),
+                    _.contains(options, '--no-ff')
+                );
             }
         },
 

@@ -82,9 +82,9 @@ function Repo() {
         }
     };
 
-    this.merge = function(branchNames) {
+    this.merge = function(branchNames, noFF) {
 
-        if (branchNames.length == 1){
+        if ((branchNames.length == 1) && !noFF){
             var mFF = _canFF(HEAD, branchNames[0]);
 
             if ( mFF == 1) {
