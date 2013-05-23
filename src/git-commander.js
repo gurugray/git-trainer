@@ -23,8 +23,8 @@ function gitCommander(repo) {
 
             'checkout': function(options) {
                 if ( '-b' == options[0] ) {
-                    repo.branch(options[1]);
-                    options[0] = options[1];
+                    options.shift();
+                    repo.branch(options);
                 }
                 repo.switchToBranch(options[0]);
             },
