@@ -17,6 +17,8 @@ git rebase BRANCH_NAME
 
 git reset HASH
 
+git gc
+
 git cherry-pick HASH #just for demo
 
 git revert HASH  #just for demo
