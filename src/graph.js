@@ -127,11 +127,13 @@ function Graph(holder, w, h) {
 
         data.nodes.forEach(function(nodeOID) {
             var node = _getNode(nodeOID);
-            
+
            if (!node) {
                 var parentNode = _getNode(raw[nodeOID].parents[0]);
                 if (parentNode) {
-                    node = parentNode;
+                    node = _.clone(parentNode, true);
+                    node.x -= 10;
+                    node.y -= 10;
                 } else {
                     node = {oid: nodeOID, x: w/2, y: h/2};
                 }
@@ -151,7 +153,7 @@ function Graph(holder, w, h) {
                 }
             });
         });
-        
+
         var aBranches = d3.keys(data.branches);
 
         data.nodes.forEach(function(nodeOID){
