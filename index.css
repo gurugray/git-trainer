@@ -1,21 +1,26 @@
+/*
+    color-scheme
+
+    3C3658
+    6B616E
+    BDAAA1
+    F2DCB9
+    F7E0AE
+ */
+
 html, body {
     width: 100%;
     height: 100%;
     margin: 0;
     padding: 0;
 
-    background-image: linear-gradient(#eeeeee, #ffffff);
-}
-
-rect {
-    fill: #fff;
+    background-image: linear-gradient(#F7E0AE, #F2DCB9);
 }
 
 .node {
-    fill: #efeffa;
-    stroke: #88f;
+    fill: #F2DCB9;
+    stroke: #6B616E;
     stroke-width: 3;
-    -webkit-svg-shadow: 0px 5px 60px #aaf;
 
     cursor: pointer;
 
@@ -23,44 +28,28 @@ rect {
 }
 
 .nodeDead {
-    fill: #eee;
-    stroke: #999;
-    stroke-width: 1;
-    -webkit-svg-shadow: 0px 5px 60px #999;
+    fill: #F2DCB9;
+    stroke: #BDAAA1;
+    stroke-width: 3;
 
     cursor: pointer;
 }
 
 svg .nodeTextDead
 {
-    stroke: #999;
-}
-
-
-.nodeCurrent {
-    fill: #fffb9a;
-    stroke: #f6c360;
-    stroke-width: 4;
-
-    cursor: pointer;
-}
-
-.init {
-    fill: red;
-    stroke: #fee;
+    stroke: #BDAAA1;
 }
 
 .link
 {
-    stroke: #88a;
+    stroke: #6B616E;
     stroke-width: 3;
-    -webkit-svg-shadow: 0px 0px 35px #88f;
     -webkit-transform: translateZ(0);
 }
 
 .arrow
 {
-    fill: #88f;
+    fill: #6B616E;
 }
 
 .nodeName,
@@ -69,7 +58,7 @@ svg .nodeTextDead
 
     pointer-events: none;
 
-    fill: #777;
+    fill: #6B616E;
 }
 
 .labels {
@@ -83,7 +72,7 @@ svg .nodeTextDead
 
     cursor: pointer;
 
-    stroke: #88f;
+    stroke: #6B616E;
 }
 
 .commandLine
