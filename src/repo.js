@@ -72,7 +72,7 @@ function Repo() {
 
     this.branchRemove = function(name){
         if (branches[name]) {
-            branches = _.pick(branches, _.difference(_.keys(branches),name));
+            branches = _.omit(branches, name);
             return true;
         } else {
             return false;
@@ -185,10 +185,6 @@ function Repo() {
 
         if (null == oid) {
             return null;
-        }
-
-        if ( (null == _data[oid].parents[0]) && (null == _data[oid].parents[1]) ) {
-            return oid;
         }
 
         rv.push(oid);
