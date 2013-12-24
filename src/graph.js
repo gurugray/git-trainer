@@ -22,6 +22,21 @@ function Graph(holder, w, h) {
             .charge(-700)
             .size([w, h]);
 
+        vis.append("svg:defs").selectAll("marker")
+                .data(["arrow"])
+            .enter()
+            .append("svg:marker")
+                .attr("id", String)
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 26)
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr("orient", "auto")
+                .attr('class', 'arrow')
+            .append("svg:path")
+                .attr("d", "M0, -3L10, 0L0, 3");
+
     function _getNode(oid) {
         return nodes.filter(function(elem, i, q){ return (elem.oid == oid) })[0];
     }
@@ -50,21 +65,6 @@ function Graph(holder, w, h) {
     });
 
     function _restart() {
-        vis.append("svg:defs").selectAll("marker")
-                .data(["arrow"])
-            .enter()
-            .append("svg:marker")
-                .attr("id", String)
-                .attr("viewBox", "0 -5 10 10")
-                .attr("refX", 26)
-                .attr("refY", 0)
-                .attr("markerWidth", 6)
-                .attr("markerHeight", 6)
-                .attr("orient", "auto")
-                .attr('class', 'arrow')
-            .append("svg:path")
-                .attr("d", "M0, -3L10, 0L0, 3");
-
         vis.selectAll("line.link")
                 .data(links)
             .enter().insert("svg:line", "circle.node")
