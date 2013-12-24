@@ -50,11 +50,21 @@ function Graph(holder, w, h) {
 
         vis.selectAll("circle.node")
             .attr('cx', function(d){ return d.x})
-            .attr('cy', function(d){ return d.y});
+            .attr('cy', function(d){ return d.y})
+            .attr('class', function(d){
+                return !!~_data._deadNodes.indexOf(d.oid) ?
+                    'node nodeDead' :
+                    'node';
+            })
 
         vis.selectAll("text.nodeName")
             .attr("transform", function(d) {
                 return "translate(" + parseInt(d.x-23) + "," + parseInt(d.y+5) + ")";
+            })
+            .attr('class', function(d){
+                return !!~_data._deadNodes.indexOf(d.oid) ?
+                    'nodeName nodeTextDead' :
+                    'nodeName';
             });
 
 
@@ -65,6 +75,14 @@ function Graph(holder, w, h) {
     });
 
     function _restart() {
+
+        force.nodes(nodes).links(links).start();
+
+        vis.selectAll("circle.node").data(nodes).exit().remove();
+        vis.selectAll("line.link").data(links).exit().remove();
+        vis.selectAll("text.nodeName").data(nodes).exit().remove();
+        vis.selectAll("text.labels").data(labels).exit().remove();
+
         vis.selectAll("line.link")
                 .data(links)
             .enter().insert("svg:line", "circle.node")
@@ -100,30 +118,20 @@ function Graph(holder, w, h) {
                 .text(function(d) {
                     return (labels[d.oid].length)? ('← '+labels[d.oid].join(', ')):('');
                 });
-        force.start();
     }
 
     this.init = function(data){
-
         _self.dataUpdate(data);
     }
 
     this.dataUpdate = function(data) {
-
-        force.resume();
-
+        _data = data,
         links = [],
         labels = {};
         var tmp = {};
         raw = data.raw;
 
         var new_nodes = [];
-
-        //TODO: that's must do d3js
-        $("text.labels, text.nodeName, circle, line").remove();
-
-        $(".nodeDead").attr('class', 'node');
-        $(".nodeTextDead").attr('class', 'node');
 
         data.nodes.forEach(function(nodeOID) {
             var node = _getNode(nodeOID);
@@ -176,15 +184,6 @@ function Graph(holder, w, h) {
             };
         });
 
-        force.nodes(nodes).links(links);
-
-        //TODO: dirty hack — need to use callbacks instead
-        setTimeout(function(){
-            data._deadNodes.forEach(function(oid){
-                $('[data-oid="'+oid+'"]').attr('class', 'node nodeDead');
-                $('[data-name-oid="'+oid+'"]').attr('class', 'nodeName nodeTextDead');
-            });
-        }, 42);
         _restart();
     }
 
