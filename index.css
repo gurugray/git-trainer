@@ -23,19 +23,37 @@ html, body {
     stroke-width: 3;
 
     cursor: pointer;
-
-    -webkit-transform: translateZ(0);
 }
 
-.nodeDead {
+.node.dead {
     fill: #F2DCB9;
     stroke: #BDAAA1;
-    stroke-width: 3;
-
-    cursor: pointer;
 }
 
-svg .nodeTextDead
+.node text,
+.labels {
+    font-family: Menlo, Consolas, Courier, sans-serif;
+
+    fill: #6B616E;
+
+    pointer-events: none;
+}
+
+.labels {
+    font-size: 15px;
+}
+
+.node text {
+    font-size: 11px;
+    font-weight: 400;
+
+    cursor: pointer;
+
+    stroke: #6B616E;
+    stroke-width: 0.5;
+}
+
+.node.dead text
 {
     stroke: #BDAAA1;
 }
@@ -44,35 +62,11 @@ svg .nodeTextDead
 {
     stroke: #6B616E;
     stroke-width: 3;
-    -webkit-transform: translateZ(0);
 }
 
 .arrow
 {
     fill: #6B616E;
-}
-
-.nodeName,
-.labels {
-    font-family: Menlo, Arial, sans-serif;
-
-    pointer-events: none;
-
-    fill: #6B616E;
-}
-
-.labels {
-    font-size: 15px;
-}
-
-.nodeName {
-    font-size: 11px;
-    font-weight: 400;
-
-
-    cursor: pointer;
-
-    stroke: #6B616E;
 }
 
 .commandLine

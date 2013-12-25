@@ -48,27 +48,17 @@ function Graph(holder, w, h) {
             .attr("x2", function(d) { return d.target.x })
             .attr("y2", function(d) { return d.target.y });
 
-        vis.selectAll("circle.node")
-            .attr('cx', function(d){ return d.x})
-            .attr('cy', function(d){ return d.y})
-            .attr('class', function(d){
-                return !!~_data._deadNodes.indexOf(d.oid) ?
-                    'node nodeDead' :
-                    'node';
-            })
-
-        vis.selectAll("text.nodeName")
+        vis.selectAll(".node")
             .attr("transform", function(d) {
-                return "translate(" + parseInt(d.x-23) + "," + parseInt(d.y+5) + ")";
+                return "translate(" + parseInt(d.x) + "," + parseInt(d.y) + ")";
             })
             .attr('class', function(d){
                 return !!~_data._deadNodes.indexOf(d.oid) ?
-                    'nodeName nodeTextDead' :
-                    'nodeName';
+                    'node dead' :
+                    'node';
             });
 
-
-        vis.selectAll("text.labels")
+        vis.selectAll(".labels")
             .attr("transform", function(d) {
                 return "translate(" + parseInt(d.x+35) + "," + parseInt(d.y+6) + ")";
             });
@@ -78,14 +68,14 @@ function Graph(holder, w, h) {
 
         force.nodes(nodes).links(links).start();
 
-        vis.selectAll("circle.node").data(nodes).exit().remove();
+        vis.selectAll(".node").data(nodes).exit().remove();
         vis.selectAll("line.link").data(links).exit().remove();
-        vis.selectAll("text.nodeName").data(nodes).exit().remove();
-        vis.selectAll("text.labels").data(labels).exit().remove();
+
+        vis.selectAll(".labels").data(labels).exit().remove();
 
         vis.selectAll("line.link")
                 .data(links)
-            .enter().insert("svg:line", "circle.node")
+            .enter().insert("svg:line", ".node")
                 .attr("class", "link")
                 .attr("x1", function(d) { return d.source.x })
                 .attr("y1", function(d) { return d.source.y })
@@ -93,23 +83,21 @@ function Graph(holder, w, h) {
                 .attr("y2", function(d) { return d.target.y })
                 .attr("marker-end", function(d) { return "url(#arrow)" });
 
-        vis.selectAll("circle.node")
-                .data(nodes)
-            .enter().insert("svg:circle")
-                .attr("class", 'node')
-                .attr("r", 30)
-                .attr('cx', function(d){ return d.x})
-                .attr('cy', function(d){ return d.y})
-                .attr("data-oid", function(d){ return d.oid })
-
+    var node = vis.selectAll(".node")
+            .data(nodes).enter()
+            .append('g')
+            .attr("class", "node")
+            .attr("data-oid", function(d){ return d.oid })
             .call(force.drag);
 
-        vis.selectAll("text.nodeName")
-                .data(nodes)
-            .enter().append("text")
-                .attr("class", 'nodeName')
-                .attr("data-name-oid", function(d){ return d.oid })
-                .text(function(d) { return d.oid });
+        node.append("circle")
+            .attr("r", 30);
+
+        node.append("text")
+            .attr("x", -23)
+            .attr("y", 4)
+            .attr("data-name-oid", function(d){ return d.oid })
+            .text(function(d) { return d.oid });
 
         vis.selectAll("text.labels")
                 .data(nodes, function(d) {return d.oid})
