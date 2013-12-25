@@ -32,7 +32,7 @@
 
 
         $(document).on('dblclick', '.node', function(e) {
-            $('#commandline').val($('#commandline').val()+$(e.target).attr('data-oid'));
+            $('#commandline').val($('#commandline').val()+$(e.target).parent('.node').attr('data-oid'));
             $('#commandline').focus();
         });
 
