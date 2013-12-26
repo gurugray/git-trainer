@@ -30,8 +30,8 @@ html, body {
     stroke: #BDAAA1;
 }
 
-.node text,
-.labels {
+.node text
+{
     font-family: Menlo, Consolas, Courier, sans-serif;
 
     fill: #6B616E;
@@ -39,8 +39,9 @@ html, body {
     pointer-events: none;
 }
 
-.labels {
+.node .labels {
     font-size: 15px;
+    stroke-width: 0;
 }
 
 .node text {
