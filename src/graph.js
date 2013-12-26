@@ -57,21 +57,16 @@ function Graph(holder, w, h) {
                     'node dead' :
                     'node';
             });
-
-        vis.selectAll(".labels")
-            .attr("transform", function(d) {
-                return "translate(" + parseInt(d.x+35) + "," + parseInt(d.y+6) + ")";
-            });
     });
 
     function _restart() {
 
         force.nodes(nodes).links(links).start();
 
-        vis.selectAll(".node").data(nodes).exit().remove();
-        vis.selectAll("line.link").data(links).exit().remove();
+        var node = vis.selectAll(".node").data(nodes, function(d) { return d.oid+d.label; });
+        node.exit().remove();
 
-        vis.selectAll(".labels").data(labels).exit().remove();
+        vis.selectAll("line.link").data(links).exit().remove();
 
         vis.selectAll("line.link")
                 .data(links)
@@ -83,8 +78,7 @@ function Graph(holder, w, h) {
                 .attr("y2", function(d) { return d.target.y })
                 .attr("marker-end", function(d) { return "url(#arrow)" });
 
-    var node = vis.selectAll(".node")
-            .data(nodes).enter()
+        node.enter()
             .append('g')
             .attr("class", "node")
             .attr("data-oid", function(d){ return d.oid })
@@ -96,16 +90,16 @@ function Graph(holder, w, h) {
         node.append("text")
             .attr("x", -23)
             .attr("y", 4)
-            .attr("data-name-oid", function(d){ return d.oid })
             .text(function(d) { return d.oid });
 
-        vis.selectAll("text.labels")
-                .data(nodes, function(d) {return d.oid})
-            .enter().insert("text")
-                .attr("class", 'labels')
-                .text(function(d) {
-                    return (labels[d.oid].length)? ('← '+labels[d.oid].join(', ')):('');
-                });
+        node
+            .append("text")
+            .attr("class", 'labels')
+            .attr("x", 35)
+            .attr("y", 4)
+            .text(function(d) {
+                return d.label ? '← '+ d.label : '';
+            });
     }
 
     this.init = function(data){
@@ -119,12 +113,15 @@ function Graph(holder, w, h) {
         var tmp = {};
         raw = data.raw;
 
-        var new_nodes = [];
+        labels = _.reduce(data.branches, function(result, item, key) {
+            result[item] = [].concat(result[item] || [], key);
+            return result;
+        }, {});
 
-        data.nodes.forEach(function(nodeOID) {
+        nodes = data.nodes.map(function(nodeOID) {
             var node = _getNode(nodeOID);
 
-           if (!node) {
+            if (!node) {
                 var parentNode = _getNode(raw[nodeOID].parents[0]);
                 if (parentNode) {
                     node = _.clone(parentNode, true);
@@ -136,11 +133,17 @@ function Graph(holder, w, h) {
             }
             tmp = {oid: nodeOID, x: node.x, y: node.y};
 
-            new_nodes.push(tmp);
+            if (labels[nodeOID]) {
+                tmp.label = labels[nodeOID].join(', ')
+                    .replace(data.HEAD, data.HEAD+' HEAD');
+            };
+
+            if (nodeOID == data.STAGE) {
+                tmp.labels = '«stage»';
+            };
+
+            return tmp;
         });
-
-        nodes = new_nodes;
-
 
         data.nodes.forEach(function(nodeOID) {
             raw[nodeOID].parents.forEach(function(parentOID){
@@ -148,28 +151,6 @@ function Graph(holder, w, h) {
                     links.push({source: _getNode(nodeOID), target: _getNode(parentOID)});
                 }
             });
-        });
-
-        var aBranches = d3.keys(data.branches);
-
-        data.nodes.forEach(function(nodeOID){
-
-            labels[nodeOID] = [];
-
-            aBranches.forEach(function(branchName){
-                if (data.branches[branchName] == nodeOID) {
-                    labels[nodeOID].push(branchName);
-
-                    if (branchName == data.HEAD) {
-                        labels[nodeOID].push('HEAD');
-                    };
-
-                };
-            });
-
-            if (nodeOID == data.STAGE) {
-                labels[nodeOID].push('«stage»');
-            };
         });
 
         _restart();
