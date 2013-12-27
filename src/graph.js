@@ -139,7 +139,7 @@ function Graph(holder, w, h) {
             };
 
             if (nodeOID == data.STAGE) {
-                tmp.labels = '«stage»';
+                tmp.label = '«stage»';
             };
 
             return tmp;
