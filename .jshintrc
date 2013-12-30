@@ -7,7 +7,6 @@
     "immed": true,
     "latedef": true,
     "maxdepth": 4,
-    "maxlen": 120,
     "maxparams": 4,
     "newcap": true,
     "noarg": true,
@@ -17,5 +16,9 @@
     "sub": true,
     "trailing": true,
     "undef": true,
-    "unused": true
+    "unused": true,
+    "browser": true,
+    "jquery": true,
+    "maxlen": 130,
+    "globals": { "SHA1": true, "_": true, "d3": true }
 }

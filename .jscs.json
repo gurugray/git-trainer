@@ -18,7 +18,6 @@
     "disallowLeftStickedOperators": [
         "?",
         "+",
-        "-",
         "/",
         "*",
         "=",
@@ -50,11 +49,6 @@
     ],
     "requireRightStickedOperators": ["!"],
     "requireLeftStickedOperators": [","],
-    "disallowImplicitTypeConversion": [
-        "numeric",
-        "binary",
-        "string"
-    ],
     "disallowKeywords": ["with"],
     "disallowMultipleLineBreaks": true,
     "disallowKeywordsOnNewLine": ["else", "catch"],

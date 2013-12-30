@@ -22,7 +22,7 @@
         var myRepo = new Repo(),
             myGraph = new Graph('.demo', window.innerWidth, window.innerHeight-100),
             commanline = new CommandLine('#commandline');
-            myCommander = new gitCommander(myRepo),
+            myCommander = new GitCommander(myRepo),
 
 
         $('body').bind('command-entered', function(e) {
