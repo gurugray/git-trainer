@@ -23,7 +23,7 @@ function Graph(holder, w, h) {
             .size([w, h]);
 
         vis.append("svg:defs").selectAll("marker")
-                .data(["arrow"])
+                .data(["live", "dead"])
             .enter()
             .append("svg:marker")
                 .attr("id", String)
@@ -33,7 +33,7 @@ function Graph(holder, w, h) {
                 .attr("markerWidth", 6)
                 .attr("markerHeight", 6)
                 .attr("orient", "auto")
-                .attr('class', 'arrow')
+                .attr('class', String)
             .append("svg:path")
                 .attr("d", "M0, -3L10, 0L0, 3");
 
@@ -43,6 +43,16 @@ function Graph(holder, w, h) {
 
     force.on("tick", function() {
         vis.selectAll("line.link")
+            .attr("class", function(d){
+                return !!~_data._deadNodes.indexOf(d.source.oid) ?
+                    'link dead' :
+                    'link'
+            })
+            .attr("marker-end", function(d) {
+                return !!~_data._deadNodes.indexOf(d.source.oid) ?
+                    'url(#dead)' :
+                    'url(#live)'
+            })
             .attr("x1", function(d) { return d.source.x })
             .attr("y1", function(d) { return d.source.y })
             .attr("x2", function(d) { return d.target.x })
@@ -76,7 +86,7 @@ function Graph(holder, w, h) {
                 .attr("y1", function(d) { return d.source.y })
                 .attr("x2", function(d) { return d.target.x })
                 .attr("y2", function(d) { return d.target.y })
-                .attr("marker-end", function(d) { return "url(#arrow)" });
+                .attr("marker-end", function(d) { return "url(#live)" });
 
         node.enter()
             .append('g')

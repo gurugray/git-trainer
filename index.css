@@ -17,6 +17,16 @@ html, body {
     background-image: linear-gradient(#F7E0AE, #F2DCB9);
 }
 
+marker.live
+{
+    fill: #6B616E;
+}
+
+marker.dead
+{
+    fill: #BDAAA1;
+}
+
 .node {
     fill: #F2DCB9;
     stroke: #6B616E;
@@ -25,7 +35,9 @@ html, body {
     cursor: pointer;
 }
 
-.node.dead {
+.node.dead,
+.link.dead
+{
     fill: #F2DCB9;
     stroke: #BDAAA1;
 }
@@ -63,11 +75,6 @@ html, body {
 {
     stroke: #6B616E;
     stroke-width: 3;
-}
-
-.arrow
-{
-    fill: #6B616E;
 }
 
 .commandLine
