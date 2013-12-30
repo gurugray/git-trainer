@@ -41,17 +41,17 @@ function Graph(holder, w, h) {
         return nodes.filter(function(elem, i, q){ return (elem.oid == oid) })[0];
     }
 
+    function _isOidDead(oid) {
+        return !!~_data._deadNodes.indexOf(oid);
+    }
+
     force.on("tick", function() {
         vis.selectAll("line.link")
             .attr("class", function(d){
-                return !!~_data._deadNodes.indexOf(d.source.oid) ?
-                    'link dead' :
-                    'link'
+                return _isOidDead(d.source.oid) ? 'link dead' : 'link'
             })
             .attr("marker-end", function(d) {
-                return !!~_data._deadNodes.indexOf(d.source.oid) ?
-                    'url(#dead)' :
-                    'url(#live)'
+                return _isOidDead(d.source.oid) ? 'url(#dead)' : 'url(#live)'
             })
             .attr("x1", function(d) { return d.source.x })
             .attr("y1", function(d) { return d.source.y })
@@ -63,9 +63,7 @@ function Graph(holder, w, h) {
                 return "translate(" + parseInt(d.x) + "," + parseInt(d.y) + ")";
             })
             .attr('class', function(d){
-                return !!~_data._deadNodes.indexOf(d.oid) ?
-                    'node dead' :
-                    'node';
+                return _isOidDead(d.oid) ? 'node dead' : 'node';
             });
     });
 
