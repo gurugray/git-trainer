@@ -45,15 +45,15 @@ function Graph(holder, w, h) {
     force.on('tick', function() {
         vis.selectAll('line.link')
             .attr('class', function(d){
-                return _isOidDead(d.source.oid) ? 'link dead' : 'link'
+                return _isOidDead(d.source.oid) ? 'link dead' : 'link';
             })
             .attr('marker-end', function(d) {
-                return _isOidDead(d.source.oid) ? 'url(#dead)' : 'url(#live)'
+                return _isOidDead(d.source.oid) ? 'url(#dead)' : 'url(#live)';
             })
-            .attr('x1', function(d) { return d.source.x })
-            .attr('y1', function(d) { return d.source.y })
-            .attr('x2', function(d) { return d.target.x })
-            .attr('y2', function(d) { return d.target.y });
+            .attr('x1', function(d) { return d.source.x; })
+            .attr('y1', function(d) { return d.source.y; })
+            .attr('x2', function(d) { return d.target.x; })
+            .attr('y2', function(d) { return d.target.y; });
 
         vis.selectAll('.node')
             .attr('transform', function(d) {
@@ -77,11 +77,11 @@ function Graph(holder, w, h) {
             .data(links).enter()
                 .insert('svg:line', '.node')
                     .attr('class', 'link')
-                    .attr('x1', function(d) { return d.source.x })
-                    .attr('y1', function(d) { return d.source.y })
-                    .attr('x2', function(d) { return d.target.x })
-                    .attr('y2', function(d) { return d.target.y })
-                    .attr('marker-end', function(d) { return 'url(#live)' });
+                    .attr('x1', function(d) { return d.source.x; })
+                    .attr('y1', function(d) { return d.source.y; })
+                    .attr('x2', function(d) { return d.target.x; })
+                    .attr('y2', function(d) { return d.target.y; })
+                    .attr('marker-end', function() { return 'url(#live)'; });
 
         node.enter()
             .append('g')

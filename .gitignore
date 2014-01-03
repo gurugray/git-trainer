@@ -1,1 +1,5 @@
 node_modules
+bower_components
+libs/d3.min.js
+libs/jquery.min.js
+libs/lodash.min.js
