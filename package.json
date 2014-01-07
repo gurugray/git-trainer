@@ -7,7 +7,8 @@
         "url": "git://github.com/gurugray/git-trainer.git"
     },
     "dependencies": {
-        "jscs": "1.0.5",
-        "jshint": "2.1.4"
+        "grunt": "~0.4.2",
+        "grunt-contrib-jshint": "~0.8.0",
+        "grunt-jscs-checker": "~0.3.0"
     }
 }

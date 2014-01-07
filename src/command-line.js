@@ -11,9 +11,9 @@ function CommandLine(input) {
         switch (e.keyCode) {
             case 13:
                 if (input.val !== '') {
-                     (input.val() !== history[history.length - 1]) && history.push(input.val());
-                     input.val('');
-                     currentPosition = history.length;
+                    (input.val() !== history[history.length - 1]) && history.push(input.val());
+                    input.val('');
+                    currentPosition = history.length;
 
                     $('body').trigger('command-entered');
                 }
