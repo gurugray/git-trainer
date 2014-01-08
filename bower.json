@@ -15,7 +15,8 @@
             "js": "dist/lodash.min.js"
         },
         "jquery": {
-            "js": "jquery.min.js"
+            "js": "jquery.min.js",
+            "map": "jquery.min.map"
         },
         "d3": {
             "js": "d3.min.js"
