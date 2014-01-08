@@ -1,4 +1,5 @@
 /*jshint -W058 */ //not alerting about invoking constructors without ()
+/* global jsSHA */
 /* exported Repo */
 function Repo() {
     var _data = {},
@@ -12,8 +13,9 @@ function Repo() {
         };
 
     function Node(parents) {
+        var shaObj = new jsSHA('salt' + Math.random() + (new Date).valueOf(), 'TEXT');
         return {
-            oid: SHA1('salt' + Math.random() + (new Date).valueOf()).substring(0, 7),
+            oid: shaObj.getHash('SHA-1', 'HEX').substring(0, 7),
             parents: parents ? parents : [branches[HEAD], null]
         };
     }
