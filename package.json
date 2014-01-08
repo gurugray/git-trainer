@@ -1,0 +1,21 @@
+{
+    "name": "git-trainer",
+    "version": "0.0.1",
+    "description": "Simple visualiation tool for teaching git",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/gurugray/git-trainer.git"
+    },
+    "dependencies": {
+        "grunt": "0.4.2",
+        "grunt-cli": "0.1.11",
+        "grunt-contrib-jshint": "0.8.0",
+        "grunt-jscs-checker": "0.3.0",
+        "grunt-bower-task": "0.3.4",
+        "bower": "1.2.8"
+    },
+    "private": true,
+    "scripts": {
+        "postinstall": "./node_modules/.bin/grunt"
+    }
+}
