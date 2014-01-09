@@ -1,6 +1,6 @@
 {
     "name": "git-trainer",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Simple visualiation tool for teaching git",
     "repository": {
         "type": "git",
