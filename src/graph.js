@@ -76,11 +76,7 @@ function Graph(holder, w, h) {
         vis.selectAll('line.link')
             .data(links).enter()
                 .insert('svg:line', '.node')
-                    .attr('class', 'link')
-                    .attr('x1', function(d) { return d.source.x; })
-                    .attr('y1', function(d) { return d.source.y; })
-                    .attr('x2', function(d) { return d.target.x; })
-                    .attr('y2', function(d) { return d.target.y; });
+                .attr('class', 'link');
 
         node.enter()
             .append('g')
