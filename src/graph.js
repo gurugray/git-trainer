@@ -60,7 +60,9 @@ function Graph(holder, w, h) {
                 return 'translate(' + parseInt(d.x, 10) + ',' + parseInt(d.y, 10) + ')';
             })
             .attr('class', function(d){
-                return _isOidDead(d.oid) ? 'node dead' : 'node';
+                var cls = _isOidDead(d.oid) ? 'node dead' : 'node';
+                cls += d.label ? ' head' : ' simple';
+                return cls;
             });
     });
 
@@ -68,15 +70,35 @@ function Graph(holder, w, h) {
 
         force.nodes(nodes).links(links).start();
 
-        var node = vis.selectAll('.node').data(nodes, function(d) { return d.oid + d.label; });
-        node.exit().remove();
-
         vis.selectAll('line.link').data(links).exit().remove();
 
         vis.selectAll('line.link')
             .data(links).enter()
                 .insert('svg:line', '.node')
                 .attr('class', 'link');
+
+        _drawNodes(
+            nodes.filter(function(item) {
+                return !item.label;
+            }),
+            '.head'
+        );
+
+        _drawNodes(
+            nodes.filter(function(item) {
+                return !!item.label;
+            }),
+            '.simple'
+        )
+            .append('text')
+            .attr('class', 'labels')
+            .attr('x', 35)
+            .attr('y', 4)
+            .text(function(d) { return '← ' + d.label; });
+    }
+
+    function _drawNodes(nodes, cls) {
+        var node = vis.selectAll('.node' + cls).data(nodes, function(d) { return d.oid + d.label; });
 
         node.enter()
             .append('g')
@@ -92,14 +114,8 @@ function Graph(holder, w, h) {
             .attr('y', 4)
             .text(function(d) { return d.oid; });
 
-        node
-            .append('text')
-            .attr('class', 'labels')
-            .attr('x', 35)
-            .attr('y', 4)
-            .text(function(d) {
-                return d.label ? '← ' + d.label : '';
-            });
+        node.exit().remove();
+        return node;
     }
 
     this.init = function(data) {
