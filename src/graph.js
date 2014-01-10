@@ -126,7 +126,6 @@ function Graph(holder, w, h) {
         _data = data,
         links = [],
         labels = {};
-        var tmp = {};
         raw = data.raw;
 
         labels = _.reduce(data.branches, function(result, item, key) {
@@ -135,20 +134,19 @@ function Graph(holder, w, h) {
         }, {});
 
         nodes = data.nodes.map(function(nodeOID) {
-            var node = _getNode(nodeOID);
+            var node = _getNode(nodeOID)
+                tmp = { oid: nodeOID, x: w/2, y: h/2 };
 
             if (!node) {
                 var parentNode = _getNode(raw[nodeOID].parents[0]);
                 if (parentNode) {
-                    node = _.clone(parentNode, true);
-                    node.x -= 10;
-                    node.y -= 10;
-                } else {
-                    node = { oid: nodeOID, x: w / 2, y: h / 2 };
+                    tmp.x = parentNode.x - 10;
+                    tmp.y = parentNode.y - 10;
                 }
+            } else {
+                tmp.x = node.x;
+                tmp.y = node.y;
             }
-
-            tmp = { oid: nodeOID, x: node.x, y: node.y };
 
             if (labels[nodeOID]) {
                 tmp.label = labels[nodeOID].join(', ')
