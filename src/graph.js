@@ -7,6 +7,7 @@ function Graph(holder, w, h) {
         _data = {},
         raw = {},
         _self = this,
+        NODE_RADIUS = 32,
 
         vis = d3.select(holder).append('svg:svg')
             .attr('width', '100%')
@@ -15,8 +16,8 @@ function Graph(holder, w, h) {
         force = d3.layout.force()
             .nodes(nodes)
             .links(links)
-            .linkDistance(100)
-            .charge(-700)
+            .linkDistance(NODE_RADIUS*3.5)
+            .charge(-NODE_RADIUS*NODE_RADIUS/2)
             .size([w, h]);
 
     vis.append('svg:defs').selectAll('marker')
@@ -25,7 +26,7 @@ function Graph(holder, w, h) {
         .append('svg:marker')
             .attr('id', String)
             .attr('viewBox', '0 -5 10 10')
-            .attr('refX', 26)
+            .attr('refX', NODE_RADIUS-6)
             .attr('refY', 0)
             .attr('markerWidth', 6)
             .attr('markerHeight', 6)
@@ -92,8 +93,8 @@ function Graph(holder, w, h) {
         )
             .append('text')
             .attr('class', 'labels')
-            .attr('x', 35)
-            .attr('y', 4)
+            .attr('x', NODE_RADIUS+8)
+            .attr('y', '0.3em')
             .text(function(d) { return '← ' + d.label; });
     }
 
@@ -107,11 +108,11 @@ function Graph(holder, w, h) {
             .call(force.drag);
 
         node.append('circle')
-            .attr('r', 30);
+            .attr('r', NODE_RADIUS);
 
         node.append('text')
-            .attr('x', -23)
-            .attr('y', 4)
+            .attr('x', '-2.15em')
+            .attr('y', '0.4em')
             .text(function(d) { return d.oid; });
 
         node.exit().remove();
@@ -134,14 +135,15 @@ function Graph(holder, w, h) {
         }, {});
 
         nodes = data.nodes.map(function(nodeOID) {
-            var node = _getNode(nodeOID)
-                tmp = { oid: nodeOID, x: w/2, y: h/2 };
+            var node = _getNode(nodeOID),
+                tmp = { oid: nodeOID, x: w/2, y: h/2 },
+                parentNode;
 
             if (!node) {
-                var parentNode = _getNode(raw[nodeOID].parents[0]);
+                parentNode = _getNode(raw[nodeOID].parents[0]);
                 if (parentNode) {
-                    tmp.x = parentNode.x - 10;
-                    tmp.y = parentNode.y - 10;
+                    tmp.x = parentNode.x + NODE_RADIUS;
+                    tmp.y = parentNode.y + NODE_RADIUS;
                 }
             } else {
                 tmp.x = node.x;
