@@ -134,32 +134,36 @@ function Graph(holder, w, h) {
             return result;
         }, {});
 
-        nodes = data.nodes.map(function(nodeOID) {
-            var node = _getNode(nodeOID),
-                tmp = { oid: nodeOID, x: w/2, y: h/2 },
-                parentNode;
+        function _copyXY(nodeOut, nodeIn) {
+            if (nodeIn) {
+                nodeOut.x = nodeIn.x;
+                nodeOut.y = nodeIn.y;
+            }
 
-            if (!node) {
-                parentNode = _getNode(raw[nodeOID].parents[0]);
-                if (parentNode) {
-                    tmp.x = parentNode.x + NODE_RADIUS;
-                    tmp.y = parentNode.y + NODE_RADIUS;
-                }
-            } else {
-                tmp.x = node.x;
-                tmp.y = node.y;
+            return nodeOut;
+        }
+
+        nodes = data.nodes.map(function(nodeOID) {
+            var refNode = _getNode(nodeOID),
+                parentNode,
+                current = { oid: nodeOID, x: w/2, y: h/2 };
+
+            if (refNode) {
+                _copyXY(current, refNode);
+            } else if (!refNode && (parentNode = _getNode(raw[nodeOID].parents[0]))) {
+                _copyXY(current, {x: parentNode.x+NODE_RADIUS, y: parentNode.y+NODE_RADIUS});
             }
 
             if (labels[nodeOID]) {
-                tmp.label = labels[nodeOID].join(', ')
+                current.label = labels[nodeOID].join(', ')
                     .replace(data.HEAD, data.HEAD + ' HEAD');
             }
 
             if (nodeOID === data.STAGE) {
-                tmp.label = '«stage»';
+                current.label = '«stage»';
             }
 
-            return tmp;
+            return current;
         });
 
         data.nodes.forEach(function(nodeOID) {
