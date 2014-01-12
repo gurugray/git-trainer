@@ -16,8 +16,8 @@ function Graph(holder, w, h) {
         force = d3.layout.force()
             .nodes(nodes)
             .links(links)
-            .linkDistance(NODE_RADIUS*3.5)
-            .charge(-NODE_RADIUS*NODE_RADIUS/2)
+            .linkDistance(NODE_RADIUS * 3.5)
+            .charge(-NODE_RADIUS * NODE_RADIUS / 2)
             .size([w, h]);
 
     vis.append('svg:defs').selectAll('marker')
@@ -26,7 +26,7 @@ function Graph(holder, w, h) {
         .append('svg:marker')
             .attr('id', String)
             .attr('viewBox', '0 -5 10 10')
-            .attr('refX', NODE_RADIUS-6)
+            .attr('refX', NODE_RADIUS - 6)
             .attr('markerWidth', 6)
             .attr('markerHeight', 6)
             .attr('orient', 'auto')
@@ -92,7 +92,7 @@ function Graph(holder, w, h) {
         )
             .append('text')
             .attr('class', 'labels')
-            .attr('x', NODE_RADIUS+8)
+            .attr('x', NODE_RADIUS + 8)
             .attr('y', '0.3em')
             .text(function(d) { return '← ' + d.label; });
     }
@@ -145,12 +145,12 @@ function Graph(holder, w, h) {
         nodes = data.nodes.map(function(nodeOID) {
             var refNode = _getNode(nodeOID),
                 parentNode,
-                current = { oid: nodeOID, x: w/2, y: h/2 };
+                current = { oid: nodeOID, x: w / 2, y: h / 2 };
 
             if (refNode) {
                 _copyXY(current, refNode);
             } else if (!refNode && (parentNode = _getNode(raw[nodeOID].parents[0]))) {
-                _copyXY(current, {x: parentNode.x+NODE_RADIUS, y: parentNode.y+NODE_RADIUS});
+                _copyXY(current, { x: parentNode.x + NODE_RADIUS, y: parentNode.y + NODE_RADIUS });
             }
 
             if (labels[nodeOID]) {
