@@ -27,7 +27,6 @@ function Graph(holder, w, h) {
             .attr('id', String)
             .attr('viewBox', '0 -5 10 10')
             .attr('refX', NODE_RADIUS-6)
-            .attr('refY', 0)
             .attr('markerWidth', 6)
             .attr('markerHeight', 6)
             .attr('orient', 'auto')
