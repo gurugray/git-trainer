@@ -8,7 +8,6 @@
     <input id="commandline" class="commandLine" spellcheck="false" autofocus="true" />
     <div class="demo"></div>
 
-    <script src="libs/jquery.min.js"></script>
     <script src="libs/lodash.min.js"></script>
     <script src="libs/d3.min.js"></script>
     <script src="libs/sha1.js"></script>
@@ -21,20 +20,18 @@
     <script>
         var myRepo = new Repo(),
             myGraph = new Graph('.demo', window.innerWidth, window.innerHeight-100),
-            commanline = new CommandLine('#commandline');
             myCommander = new GitCommander(myRepo),
 
+            commandLine = new CommandLine('#commandline', function(){
+                myCommander.run(commandLine.getCurrent());
+                myGraph.dataUpdate(myRepo.getData());
+            });
 
-        $('body').bind('command-entered', function(e) {
-            myCommander.run(commanline.getCurrent());
-            myGraph.dataUpdate(myRepo.getData());
-        });
-
-
-        $(document).on('dblclick', '.node', function(e) {
-            $('#commandline').val($('#commandline').val()+$(e.target).parent('.node').attr('data-oid'));
-            $('#commandline').focus();
-        });
+        document.getElementsByClassName('demo')[0].addEventListener('dblclick', function(e) {
+            if(e.srcElement && e.srcElement.tagName === 'circle') {
+                commandLine.append(e.srcElement.parentNode.dataset.oid);
+            }
+        })
 
     </script>
   </body>
