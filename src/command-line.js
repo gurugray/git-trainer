@@ -1,36 +1,35 @@
 /* exported CommandLine */
-function CommandLine(input) {
+function CommandLine(inputSelector, callback) {
 
     var history = [],
-        currentPosition = history.length;
+        currentPosition = history.length,
+        input = document.querySelectorAll(inputSelector)[0];
 
-    input = $(input);
-
-    input.bind('keydown', function(e) {
+    input.addEventListener('keydown', function(e) {
 
         switch (e.keyCode) {
             case 13:
-                if (input.val !== '') {
-                    (input.val() !== history[history.length - 1]) && history.push(input.val());
-                    input.val('');
+                if (input.value !== '') {
+                    (input.value !== history[history.length - 1]) && history.push(input.value);
+                    input.value = '';
                     currentPosition = history.length;
 
-                    $('body').trigger('command-entered');
+                    callback();
                 }
             break;
 
             case 38:
                 (currentPosition > 0) && currentPosition--;
-                input.val(history[currentPosition]);
+                input.value = history[currentPosition];
             break;
 
             case 40:
-                (currentPosition < history.length) && currentPosition++;
-                input.val(history[currentPosition]);
+                (currentPosition < history.length-1) && currentPosition++;
+                input.value = history[currentPosition];
             break;
 
             case 27:
-                input.val('');
+                input.value = '';
                 currentPosition = history.length;
             break;
         }
@@ -40,6 +39,11 @@ function CommandLine(input) {
     return {
         getCurrent: function() {
             return history[currentPosition - 1] || '';
+        },
+
+        append: function (val) {
+            input.value = input.value + val;
+            input.focus();
         }
     };
 
