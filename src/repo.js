@@ -4,7 +4,6 @@
 function Repo() {
     var _data = {},
         _idx = [],
-        _self = this,
         HEAD = 'master',
         STAGE = null,
         UP_TO_DATE = 1,
@@ -71,13 +70,13 @@ function Repo() {
     };
 
     this.revert = function() {
-        _self.add();
-        _self.commit();
+        this.add();
+        this.commit();
     };
 
     this.cherryPick = function() {
-        _self.add();
-        _self.commit();
+        this.add();
+        this.commit();
     };
 
     this.branch = function(name) {
@@ -135,8 +134,8 @@ function Repo() {
             parents.push(branches[eName]);
         });
 
-        _self.add(parents);
-        _self.commit();
+        this.add(parents);
+        this.commit();
 
     };
 
@@ -156,21 +155,22 @@ function Repo() {
     this.rebase = function (onto) {
 
         if (!!~[FAST_FORWARDABLE, UP_TO_DATE].indexOf(_canFF(HEAD, onto))) {
-            _self.merge([onto], false);
+            this.merge([onto], false);
         }
 
         var oidsB = _getParents(branches[HEAD]),
             oidsO = _getParents(branches[onto]),
             common = _.intersection(oidsB, oidsO),
-            reb = _.difference(oidsB, common).reverse();
+            reb = _.difference(oidsB, common).reverse(),
+            repo = this;
 
         if (common[0] !== branches[onto]) {
 
-                branches[HEAD] = branches[onto];
+            branches[HEAD] = branches[onto];
 
-                reb.forEach(function (){
-                _self.add();
-                _self.commit();
+            reb.forEach(function (){
+                repo.add();
+                repo.commit();
             });
         }
 
@@ -197,12 +197,12 @@ function Repo() {
             branches: branches,
             HEAD: HEAD,
             STAGE: STAGE,
-            _deadNodes: _self._findDead()
+            _deadNodes: this._findDead()
         };
     };
 
     this.gc = function() {
-        _idx = _.difference(_idx, _self._findDead());
+        _idx = _.difference(_idx, this._findDead());
     };
 
     return this;
