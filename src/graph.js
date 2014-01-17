@@ -6,7 +6,6 @@ function Graph(holder, w, h) {
         labels = {},
         _data = {},
         raw = {},
-        _self = this,
         NODE_RADIUS = 32,
 
         vis = d3.select(holder).append('svg:svg')
@@ -118,11 +117,7 @@ function Graph(holder, w, h) {
         return node;
     }
 
-    this.init = function(data) {
-        _self.dataUpdate(data);
-    };
-
-    this.dataUpdate = function(data) {
+    function _dataUpdate(data) {
         _data = data,
         links = [],
         labels = {};
@@ -177,8 +172,10 @@ function Graph(holder, w, h) {
         });
 
         _restart();
-    };
+    }
 
-  return this;
+    return {
+        dataUpdate: _dataUpdate
+    };
 
 }
