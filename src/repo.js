@@ -7,6 +7,9 @@ function Repo() {
         _self = this,
         HEAD = 'master',
         STAGE = null,
+        UP_TO_DATE = 1,
+        FAST_FORWARDABLE = 2,
+        NOT_FAST_FORWARDABLE = 0,
 
         branches = {
             master: null
@@ -22,11 +25,11 @@ function Repo() {
 
     function _canFF(bName, testName) {
         if (_.include(_getParents(branches[bName]), branches[testName])) {
-            return 1;
+            return UP_TO_DATE;
         } else if (_.include(_getParents(branches[testName]), branches[bName])) {
-            return 2;
+            return FAST_FORWARDABLE;
         } else {
-            return 0;
+            return NOT_FAST_FORWARDABLE;
         }
     }
 
@@ -116,10 +119,9 @@ function Repo() {
         if ((branchNames.length === 1) && !noFF){
             var mFF = _canFF(HEAD, branchNames[0]);
 
-            if ( mFF === 1) {
-                //allready up to date
+            if ( mFF === UP_TO_DATE) {
                 return false;
-            } else if (mFF === 2) {
+            } else if (mFF === FAST_FORWARDABLE) {
                 branches[HEAD] = branches[branchNames[0]];
                 return true;
             }
@@ -153,7 +155,7 @@ function Repo() {
 
     this.rebase = function (onto) {
 
-        if (_canFF(HEAD, onto) > 0) {
+        if (!!~[FAST_FORWARDABLE, UP_TO_DATE].indexOf(_canFF(HEAD, onto))) {
             _self.merge([onto], false);
         }
 
