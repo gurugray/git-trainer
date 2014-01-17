@@ -48,11 +48,6 @@ function GitCommander(repo) {
                 repo.gc();
             },
 
-            ci: function() {
-                repo.add();
-                repo.commit();
-            },
-
             revert: function() {
                 repo.revert();
             },
@@ -71,7 +66,8 @@ function GitCommander(repo) {
 
         aliases = {
             b: 'branch',
-            co: 'checkout'
+            co: 'checkout',
+            ci: 'add && commit'
         };
 
     function _run(commandStr) {
@@ -83,7 +79,9 @@ function GitCommander(repo) {
                 if (commands[command]) {
                     commands[command](options);
                 } else if (aliases[command]) {
-                    commands[aliases[command]](options);
+                    aliases[command].split(' && ').forEach(function(command){
+                        commands[command](options);
+                    });
                 }
 
             return true;
