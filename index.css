@@ -54,6 +54,8 @@ marker.dead
 .node .labels {
     font-size: 15px;
     stroke-width: 0;
+
+    text-anchor: start;
 }
 
 .node text {
@@ -64,6 +66,8 @@ marker.dead
 
     stroke: #6B616E;
     stroke-width: 0.5;
+
+    text-anchor: middle;
 }
 
 .node.dead text

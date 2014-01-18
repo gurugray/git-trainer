@@ -109,7 +109,6 @@ function Graph(holder, w, h) {
             .attr('r', NODE_RADIUS);
 
         node.append('text')
-            .attr('x', '-2.15em')
             .attr('y', '0.4em')
             .text(function(d) { return d.oid; });
 
