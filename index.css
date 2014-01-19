@@ -27,7 +27,8 @@ marker.dead
     fill: #BDAAA1;
 }
 
-.node {
+.node
+{
     fill: #F2DCB9;
     stroke: #6B616E;
     stroke-width: 3;
@@ -44,30 +45,25 @@ marker.dead
 
 .node text
 {
-    font-family: Menlo, Consolas, Courier, sans-serif;
+    font: 11px/1 Menlo, Consolas, Courier, sans-serif;
+    font-weight: 400;
 
     fill: #6B616E;
+    stroke: #6B616E;
+    stroke-width: 0.5;
 
     pointer-events: none;
+    cursor: pointer;
+
+    text-anchor: middle;
 }
 
-.node .labels {
+.node .labels
+{
     font-size: 15px;
     stroke-width: 0;
 
     text-anchor: start;
-}
-
-.node text {
-    font-size: 11px;
-    font-weight: 400;
-
-    cursor: pointer;
-
-    stroke: #6B616E;
-    stroke-width: 0.5;
-
-    text-anchor: middle;
 }
 
 .node.dead text
@@ -81,9 +77,9 @@ marker.dead
     stroke-width: 3;
 }
 
-.commandLine
+.command-line
 {
-    font-family: Menlo, Consolas;
+    font-family: Menlo, Consolas, Courier, sans-serif;
     font-size: 400%;
 
     margin: 0;

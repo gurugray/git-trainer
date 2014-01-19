@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="index.css">
   </head>
   <body>
-    <input id="commandline" class="commandLine" spellcheck="false" autofocus="true" />
+    <input class="command-line" spellcheck="false" autofocus="true" />
     <div class="demo"></div>
 
     <script src="libs/lodash.min.js"></script>
@@ -23,7 +23,7 @@
             myGraph = new Graph('.demo', window.innerWidth, window.innerHeight-100),
             myCommander = new GitCommander(myRepo),
 
-            commandLine = new CommandLine('#commandline', function(){
+            commandLine = new CommandLine('.command-line', function(){
                 myCommander.run(commandLine.getCurrent());
                 myGraph.dataUpdate(myRepo.getData());
             });
