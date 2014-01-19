@@ -23,10 +23,10 @@
             myGraph = new Graph('.demo', window.innerWidth, window.innerHeight-100),
             myCommander = new GitCommander(myRepo),
 
-            commandLine = new CommandLine('.command-line', function(){
-                myCommander.run(commandLine.getCurrent());
-                myGraph.dataUpdate(myRepo.getData());
-            });
+        commandLine = new CommandLine('.command-line', function() {
+            myCommander.run(commandLine.getCurrent());
+            myGraph.dataUpdate(myRepo.getData());
+        });
 
         document.getElementsByClassName('demo')[0].addEventListener('dblclick', function(e) {
             if(e.srcElement && e.srcElement.tagName === 'circle') {
