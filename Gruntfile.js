@@ -24,15 +24,27 @@ module.exports = function(grunt) {
                     }
                 }
             }
+        },
+        borschik: {
+            js: {
+                src: ['src/index.js'],
+                dest: ['dist/index.js'],
+                tech: 'js',
+                options: {
+                    minimize: grunt.option('target') !== 'dev'
+                }
+            }
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-jscs-checker');
     grunt.loadNpmTasks('grunt-bower-task');
+    grunt.loadNpmTasks('grunt-borschik');
 
     grunt.registerTask('lint', ['jshint', 'jscs']);
+    grunt.registerTask('build', ['borschik']);
 
-    grunt.registerTask('default', ['bower']);
+    grunt.registerTask('default', ['bower', 'build']);
 
 };

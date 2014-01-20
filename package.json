@@ -12,6 +12,7 @@
         "grunt-contrib-jshint": "0.8.0",
         "grunt-jscs-checker": "0.3.0",
         "grunt-bower-task": "0.3.4",
+        "grunt-borschik": "0.1.7",
         "bower": "1.2.8"
     },
     "private": true,
