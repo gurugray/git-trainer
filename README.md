@@ -32,6 +32,9 @@ git clone …
 npm install
 vi …
 
+#build
+./node_modules/.bin/grunt build --target=dev
+
 #check errors and codestyle
 ./node_modules/.bin/grunt lint
 
