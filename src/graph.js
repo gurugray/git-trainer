@@ -43,8 +43,8 @@ function Graph(holder, w, h) {
 
     force.on('tick', function() {
         vis.selectAll('line.link')
-            .attr('class', function(d){
-                return _isOidDead(d.source.oid) ? 'link dead' : 'link';
+            .classed({
+                dead: function(d) { return _isOidDead(d.source.oid); }
             })
             .attr('marker-end', function(d) {
                 return _isOidDead(d.source.oid) ? 'url(#dead)' : 'url(#live)';
@@ -58,10 +58,10 @@ function Graph(holder, w, h) {
             .attr('transform', function(d) {
                 return 'translate(' + parseInt(d.x, 10) + ',' + parseInt(d.y, 10) + ')';
             })
-            .attr('class', function(d){
-                var cls = _isOidDead(d.oid) ? 'node dead' : 'node';
-                cls += d.label ? ' head' : ' simple';
-                return cls;
+            .classed({
+                dead: function(d) { return _isOidDead(d.oid); },
+                head: function(d) { return !!d.label; },
+                simple: function(d) { return !d.label; }
             });
     });
 
