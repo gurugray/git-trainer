@@ -33,7 +33,7 @@ npm install
 vi …
 
 #build
-./node_modules/.bin/grunt build --target=dev
+./node_modules/.bin/grunt start --target=dev
 
 #check errors and codestyle
 ./node_modules/.bin/grunt lint

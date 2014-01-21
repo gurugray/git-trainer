@@ -10,6 +10,7 @@
         "grunt": "0.4.2",
         "grunt-cli": "0.1.11",
         "grunt-contrib-jshint": "0.8.0",
+        "grunt-contrib-watch": "0.5.3",
         "grunt-jscs-checker": "0.3.0",
         "grunt-bower-task": "0.3.4",
         "grunt-borschik": "0.1.7",
