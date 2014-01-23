@@ -35,6 +35,14 @@ module.exports = function(grunt) {
                 }
             }
         },
+        csso: {
+            dist: {
+                files: {
+                    'dist/index.css': ['index.css']
+                }
+            }
+        },
+
         watch: {
             scripts: {
                 files: ['src/*.js'],
@@ -50,10 +58,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-jscs-checker');
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-borschik');
+    grunt.loadNpmTasks('grunt-csso');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('lint', ['jshint', 'jscs']);
-    grunt.registerTask('build', ['borschik']);
+    grunt.registerTask('build', ['csso', 'borschik']);
 
     grunt.registerTask('default', ['bower', 'build']);
     grunt.registerTask('start', ['build', 'watch']);

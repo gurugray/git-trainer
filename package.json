@@ -14,6 +14,7 @@
         "grunt-jscs-checker": "0.3.0",
         "grunt-bower-task": "0.3.4",
         "grunt-borschik": "0.1.7",
+        "grunt-csso": "0.5.3",
         "bower": "1.2.8"
     },
     "private": true,
