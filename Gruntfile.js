@@ -2,15 +2,19 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+
         jshint: {
             files: ['src/*.js', 'Gruntfile.js'],
+
             options: {
                 jshintrc: '.jshintrc'
             }
         },
+
         jscs: {
             src: ['src/*.js', 'Gruntfile.js']
         },
+
         bower: {
             install: {
                 options: {
@@ -25,6 +29,7 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         borschik: {
             js: {
                 src: ['src/index.js'],
@@ -35,10 +40,24 @@ module.exports = function(grunt) {
                 }
             }
         },
+
         csso: {
             dist: {
                 files: {
                     'dist/index.css': ['index.css']
+                }
+            }
+        },
+
+        htmlmin: {
+            dist: {
+                options: {
+                    removeComments: true,
+                    collapseWhitespace: true
+                },
+
+                files: {
+                    'index.html': 'src/index.html'
                 }
             }
         },
@@ -59,10 +78,11 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-bower-task');
     grunt.loadNpmTasks('grunt-borschik');
     grunt.loadNpmTasks('grunt-csso');
+    grunt.loadNpmTasks('grunt-contrib-htmlmin');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     grunt.registerTask('lint', ['jshint', 'jscs']);
-    grunt.registerTask('build', ['csso', 'borschik']);
+    grunt.registerTask('build', ['csso', 'borschik', 'htmlmin']);
 
     grunt.registerTask('default', ['bower', 'build']);
     grunt.registerTask('start', ['build', 'watch']);
