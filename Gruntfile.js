@@ -44,7 +44,7 @@ module.exports = function(grunt) {
         csso: {
             dist: {
                 files: {
-                    'dist/index.css': ['index.css']
+                    'dist/index.css': ['src/index.css']
                 }
             }
         },
