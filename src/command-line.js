@@ -1,5 +1,11 @@
 /* exported CommandLine */
 function CommandLine(inputSelector, callback) {
+    var keyCodes = {
+        13: 'enter',
+        38: 'up',
+        40: 'down',
+        27: 'esc'
+    };
 
     function History(input) {
         var commands = [],
@@ -42,20 +48,20 @@ function CommandLine(inputSelector, callback) {
         history = new History(input);
 
     input.addEventListener('keydown', function(e) {
+        var bindings = {
 
-        switch (e.keyCode) {
-            case 13: // enter
-                history.push(input.value);
-                callback(history.current());
-            break;
+                enter: function() {
+                    history.push(input.value);
+                    callback(history.current());
+                },
 
-            case 38: history.prev(); break; // top arrow
+                up: history.prev.bind(history),
+                down: history.next.bind(history),
+                esc: history.clearCurrent.bind(history)
+            },
+            command = bindings[keyCodes[e.keyCode]];
 
-            case 40: history.next(); break; // bottom arrow
-
-            case 27: history.clearCurrent(); break; //esc
-        }
-
+        if (command) command();
     });
 
     return {
