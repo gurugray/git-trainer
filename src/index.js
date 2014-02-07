@@ -9,8 +9,8 @@ var myRepo = new Repo(),
     myGraph = new Graph('.demo', window.innerWidth, window.innerHeight-100),
     myCommander = new GitCommander(myRepo),
 
-commandLine = new CommandLine('.command-line', function() {
-    myCommander.run(commandLine.getCurrent());
+commandLine = new CommandLine('.command-line', function(command) {
+    myCommander.run(command);
     myGraph.dataUpdate(myRepo.getData());
 });
 
