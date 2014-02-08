@@ -40,7 +40,7 @@ function CommandLine(inputSelector, callback) {
         };
     }
 
-    var input = document.querySelectorAll(inputSelector)[0],
+    var input = document.querySelector(inputSelector),
         history = new History(input);
 
         Mousetrap.bind('enter', function() {

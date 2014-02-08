@@ -14,7 +14,7 @@ commandLine = new CommandLine('.command-line', function(command) {
     myGraph.dataUpdate(myRepo.getData());
 });
 
-document.querySelectorAll('.demo')[0].addEventListener('dblclick', function(e) {
+document.querySelector('.demo').addEventListener('dblclick', function(e) {
     if (e.srcElement && e.srcElement.tagName === 'circle') {
         commandLine.append(e.srcElement.parentNode.dataset.oid);
     }
