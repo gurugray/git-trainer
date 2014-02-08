@@ -10,8 +10,10 @@ function CommandLine(inputSelector, callback) {
         return {
 
             prev: function() {
-                (current > 0) && current--;
-                this.update();
+                if (current > 0) {
+                    current--;
+                    this.update();
+                }
             },
 
             update: function() { // update current state in input
@@ -19,8 +21,10 @@ function CommandLine(inputSelector, callback) {
             },
 
             next: function() {
-                (current < commands.length-1) && current++;
-                this.update();
+                if (current < commands.length - 1) {
+                    current++;
+                    this.update();
+                }
             },
             current: function() {
                 return commands[current - 1];
