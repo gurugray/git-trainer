@@ -8,7 +8,8 @@
     "dependencies": {
         "lodash": "2.4.1",
         "d3": "3.4.0",
-        "jssha": "1.5.0"
+        "jssha": "1.5.0",
+        "mousetrap": "1.4.6"
     },
     "exportsOverride": {
         "lodash": {
@@ -19,6 +20,9 @@
         },
         "jssha": {
             "js": "src/sha1.js"
+        },
+        "mousetrap": {
+            "js": "mousetrap.min.js"
         }
     },
     "private": true

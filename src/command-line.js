@@ -1,11 +1,7 @@
 /* exported CommandLine */
+/* global Mousetrap */
+
 function CommandLine(inputSelector, callback) {
-    var keyCodes = {
-        13: 'enter',
-        38: 'up',
-        40: 'down',
-        27: 'esc'
-    };
 
     function History(input) {
         var commands = [],
@@ -47,22 +43,16 @@ function CommandLine(inputSelector, callback) {
     var input = document.querySelectorAll(inputSelector)[0],
         history = new History(input);
 
-    input.addEventListener('keydown', function(e) {
-        var bindings = {
+        Mousetrap.bind('enter', function() {
+            history.push(input.value);
 
-                enter: function() {
-                    history.push(input.value);
-                    callback(history.current());
-                },
+            callback(history.current());
+            return false;
+        });
 
-                up: history.prev.bind(history),
-                down: history.next.bind(history),
-                esc: history.clearCurrent.bind(history)
-            },
-            command = bindings[keyCodes[e.keyCode]];
-
-        if (command) command();
-    });
+        Mousetrap.bind('up', history.prev.bind(history));
+        Mousetrap.bind('down', history.next.bind(history));
+        Mousetrap.bind('ctrl+c', history.clearCurrent.bind(history));
 
     return {
         append: function (val) {
