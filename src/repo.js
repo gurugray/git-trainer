@@ -47,6 +47,10 @@ function Repo() {
         return _.compact(_.flatten(rv));
     }
 
+    function isBranchExist(onto) {
+        return !!~Object.keys(branches).indexOf(onto);
+    }
+
     this.add = function(parents) {
         if (STAGE !== null) {
             return false;
@@ -116,6 +120,10 @@ function Repo() {
     this.merge = function(branchNames, noFF) {
 
         if ((branchNames.length === 1) && !noFF){
+
+            if (!isBranchExist(branchNames[0]))
+                return false;
+
             var mFF = _canFF(HEAD, branchNames[0]);
 
             if ( mFF === UP_TO_DATE) {
@@ -131,7 +139,7 @@ function Repo() {
         parents.push(branches[HEAD]);
 
         branchNames.forEach(function(eName){
-            parents.push(branches[eName]);
+            isBranchExist(eName) && parents.push(branches[eName]);
         });
 
         this.add(parents);
@@ -153,6 +161,9 @@ function Repo() {
     };
 
     this.rebase = function (onto) {
+
+        if (!isBranchExist(onto))
+            return false;
 
         if (!!~[FAST_FORWARDABLE, UP_TO_DATE].indexOf(_canFF(HEAD, onto))) {
             this.merge([onto], false);
