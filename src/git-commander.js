@@ -1,9 +1,37 @@
 /* exported GitCommander */
 function GitCommander(repo) {
 
-    var commands = {
+    function Commander() {
+        return {
+            _commands: {},
+            addCommands: function(commands) {
+                this._commands = commands;
 
-            branch: function(options) {
+                return this;
+            },
+            alias: function(a) {
+                var self = this;
+
+                Object.keys(a).forEach(function(aliasName){
+                    self._commands[aliasName] = function(params) {
+                        a[aliasName].split(' && ').forEach(function(command) {
+                            self._commands[command](params);
+                        });
+                    };
+                });
+
+                return this;
+            },
+            run: function(command, params) {
+                params = params || [params];
+                this._commands[command](params);
+            }
+        };
+    }
+
+    var commander = new Commander()
+        .addCommands({
+            branch:  function(options) {
                 if ( '-d' === options[0] ) {
                     repo.branchRemove(options[1]);
                 } else {
@@ -62,32 +90,25 @@ function GitCommander(repo) {
                     _.contains(options, '--no-ff')
                 );
             }
-        },
 
-        aliases = {
+        })
+        .alias({
             b: 'branch',
             co: 'checkout',
             ci: 'add && commit'
-        };
+        });
 
     function _run(commandStr) {
+        var command;
 
-        if (!commandStr.indexOf('git ')) {
-            var options = commandStr.substr('git '.length).split(' '),
-                command = options.shift();
+        commandStr = commandStr.split(' ');
+        command = commandStr[1];
 
-                if (commands[command]) {
-                    commands[command](options);
-                } else if (aliases[command]) {
-                    aliases[command].split(' && ').forEach(function(command){
-                        commands[command](options);
-                    });
-                }
+        if (commandStr[0] !== 'git' || !command) return false;
 
-            return true;
-        }
+        commander.run(command, commandStr.slice(2));
 
-        return false;
+        return true;
     }
 
     return {
