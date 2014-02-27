@@ -6,7 +6,7 @@
 /* global Graph, Repo, CommandLine, GitCommander */
 
 var myRepo = new Repo(),
-    myGraph = new Graph('.demo', window.innerWidth, window.innerHeight-100),
+    myGraph = new Graph('.demo', window.innerWidth, window.innerHeight-5),
     myCommander = new GitCommander(myRepo),
 
 commandLine = new CommandLine('.command-line', function(command) {

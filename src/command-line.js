@@ -48,14 +48,31 @@ function CommandLine(inputSelector, callback) {
         history = new History(input);
 
         Mousetrap.bind('enter', function() {
-            history.push(input.value);
-
-            callback(history.current());
-            return false;
+            if (input.value !== '') {
+                history.push(input.value);
+                callback(history.current());
+                input.style.display = 'none';
+            } else {
+                input.style.display = 'block';
+                input.focus();
+            }
         });
 
-        Mousetrap.bind('up', history.prev.bind(history));
-        Mousetrap.bind('down', history.next.bind(history));
+        Mousetrap.bind('up', function() {
+            input.style.display = 'block';
+            history.prev();
+        });
+
+        Mousetrap.bind('down', function() {
+            input.style.display = 'block';
+            history.next();
+        });
+
+        Mousetrap.bind('esc', function() {
+            input.style.display = 'none';
+            history.clearCurrent();
+        });
+
         Mousetrap.bind('ctrl+c', history.clearCurrent.bind(history));
 
     return {

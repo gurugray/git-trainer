@@ -79,24 +79,35 @@ marker.dead
 
 .command-line
 {
-    font-family: Menlo, Consolas, Courier, sans-serif;
-    font-size: 400%;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+
+    text-align: center;
+
+
+    font: 300%/1em Menlo, Consolas, Courier, sans-serif;
 
     margin: 0;
     padding: 3px 25px 3px 25px;
 
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
 
-    width: 100%;
+    width: 50%;
 
     border: none;
-    border-bottom: 1px solid #999;
     outline: none;
+
+    -webkit-border-radius: 15px;
+            border-radius: 15px;
 
     color: #666;
 
-    background-color: transparent;
+    background-color: rgba(189, 170, 161, 0.66);
+
+    -webkit-transform: translateX(-50%);
+       -moz-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+         -o-transform: translateX(-50%);
+            transform: translateX(-50%);
 
 }
