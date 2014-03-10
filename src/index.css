@@ -111,3 +111,56 @@ marker.dead
             transform: translateX(-50%);
 
 }
+
+.helper
+{
+    font: 80%/1em Menlo, Consolas, Courier, sans-serif;
+
+    position: absolute;
+
+    bottom: 1em;
+    right: 2em;
+
+    padding: 1em 1em 1em 2em;
+
+    color: #666;
+
+    -webkit-border-radius: 10px;
+            border-radius: 10px;
+    background-color: rgba(189, 170, 161, 0.5);
+}
+
+.helper li
+{
+    list-style: none;
+    line-height: 1.2em;
+}
+
+.helper .up::before,
+.helper .down::before,
+.helper .enter::before
+{
+    font-size: 20px;
+    position: absolute;
+
+    margin-left: -.9em;
+
+    color: #333;
+
+    z-index: 0;
+}
+
+.helper .up::before
+{
+    content: '↑';
+}
+
+.helper .down::before
+{
+    content: '↓';
+}
+
+.helper .enter::before
+{
+    content: '↵';
+}
