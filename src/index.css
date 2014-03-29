@@ -79,14 +79,15 @@ marker.dead
 
 .command-line
 {
+    font: 300%/1em Menlo, Consolas, Courier, sans-serif;
+
     position: absolute;
     top: 50px;
     left: 50%;
 
+    max-width: 90%;
+
     text-align: center;
-
-
-    font: 300%/1em Menlo, Consolas, Courier, sans-serif;
 
     margin: 0;
     padding: 3px 25px 3px 25px;
@@ -101,12 +102,14 @@ marker.dead
 
     background-color: rgba(255, 255, 255, 0.3);
 
+    -webkit-box-shadow: 1px 0 50px rgba(189, 170, 161, 1);
+            box-shadow: 1px 0 50px rgba(189, 170, 161, 1);
+
     -webkit-transform: translateX(-50%);
        -moz-transform: translateX(-50%);
         -ms-transform: translateX(-50%);
          -o-transform: translateX(-50%);
             transform: translateX(-50%);
-
 }
 
 .helper

@@ -44,12 +44,18 @@ function CommandLine(inputSelector, callback) {
         };
     }
 
+    function _recalculate() {
+        var minSize = 6,
+            current = this.value.length;
+
+        this.size = (current > minSize) ? current : minSize;
+    }
+
     var input = document.querySelector(inputSelector),
         history = new History(input);
 
-        input.addEventListener('keydown', function(){
-            this.size = (this.value.length > 6) ? this.value.length : 6;
-        });
+        input.addEventListener('keydown', _recalculate);
+        input.addEventListener('keyup', _recalculate);
 
         Mousetrap.bind('enter', function() {
             if (input.value !== '') {
