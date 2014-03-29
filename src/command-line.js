@@ -47,11 +47,14 @@ function CommandLine(inputSelector, callback) {
     var input = document.querySelector(inputSelector),
         history = new History(input);
 
+        input.addEventListener('keydown', function(){
+            this.size = (this.value.length > 6) ? this.value.length : 6;
+        });
+
         Mousetrap.bind('enter', function() {
             if (input.value !== '') {
                 history.push(input.value);
                 callback(history.current());
-                input.style.display = 'none';
             } else {
                 input.style.display = 'block';
                 input.focus();
