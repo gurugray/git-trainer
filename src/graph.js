@@ -7,6 +7,8 @@ function Graph(holder, w, h) {
         _data = {},
         raw = {},
         NODE_RADIUS = 32,
+        GAPLEFT = NODE_RADIUS + 10,
+        GAPRIGHT = GAPLEFT + 10,
 
         vis = d3.select(holder).append('svg:svg')
             .attr('width', '100%')
@@ -16,7 +18,7 @@ function Graph(holder, w, h) {
             .nodes(nodes)
             .links(links)
             .linkDistance(NODE_RADIUS * 3.5)
-            .charge(-NODE_RADIUS * NODE_RADIUS / 2)
+            .charge(-NODE_RADIUS * NODE_RADIUS / 1.5)
             .size([w, h]);
 
     vis.append('svg:defs').selectAll('marker')
@@ -24,14 +26,14 @@ function Graph(holder, w, h) {
         .enter()
         .append('svg:marker')
             .attr('id', String)
-            .attr('viewBox', '0 -5 10 10')
-            .attr('refX', NODE_RADIUS - 6)
-            .attr('markerWidth', 6)
-            .attr('markerHeight', 6)
+            .attr('viewBox', '0 200 400 0.001')
+            .attr('refY', 200 )
+            .attr('markerWidth', 3)
+            .attr('markerHeight', 3)
             .attr('orient', 'auto')
             .attr('class', String)
         .append('svg:path')
-            .attr('d', 'M0, -3L10, 0L0, 3');
+            .attr('d', 'M 0 0 L 400 200 L 0 400 z');
 
     function _getNode(oid) {
         return nodes.filter(function(elem) { return (elem.oid === oid); })[0];
@@ -42,17 +44,37 @@ function Graph(holder, w, h) {
     }
 
     force.on('tick', function() {
+
         vis.selectAll('line.link')
             .classed({
                 dead: function(d) { return _isOidDead(d.source.oid); }
             })
+
             .attr('marker-end', function(d) {
                 return _isOidDead(d.source.oid) ? 'url(#dead)' : 'url(#live)';
             })
-            .attr('x1', function(d) { return d.source.x; })
-            .attr('y1', function(d) { return d.source.y; })
-            .attr('x2', function(d) { return d.target.x; })
-            .attr('y2', function(d) { return d.target.y; });
+
+            .attr({
+                x1: function(d) {
+                        var x1 = d.source.x, y1 = d.source.y, x2 = d.target.x, y2 = d.target.y;
+                        return (GAPLEFT * (x2-x1) / Math.sqrt( (x2-x1) * (x2-x1) + (y2-y1) * (y2-y1) ) ) + x1;
+                    },
+
+                y1: function(d) {
+                        var x1 = d.source.x, y1 = d.source.y, x2 = d.target.x, y2 = d.target.y;
+                        return (GAPLEFT * (y2-y1) / Math.sqrt( (x2-x1) * (x2-x1) + (y2-y1) * (y2-y1) ) ) + y1;
+                    },
+
+                x2: function(d) {
+                        var x1 = d.source.x, y1 = d.source.y, x2 = d.target.x, y2 = d.target.y;
+                        return x2 - (GAPRIGHT * (x2-x1) / Math.sqrt( (x2-x1) * (x2-x1) + (y2-y1) * (y2-y1) ) );
+                    },
+
+                y2: function(d) {
+                        var x1 = d.source.x, y1 = d.source.y, x2 = d.target.x, y2 = d.target.y;
+                        return y2 - (GAPRIGHT * (y2-y1) / Math.sqrt( (x2-x1) * (x2-x1) + (y2-y1) * (y2-y1) ) );
+                    }
+            });
 
         vis.selectAll('.node')
             .attr('transform', function(d) {
