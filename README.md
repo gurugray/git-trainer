@@ -24,7 +24,7 @@ git cherry-pick HASH #just for demo
 git revert HASH  #just for demo
 ````
 
-##Contribution
+## Contribution
 Before contribute please check errors and codestyle.
 
 ```
@@ -46,5 +46,5 @@ git commit …
 
 ```
 
-###CC-BY Attribution Requirement
+### CC-BY Attribution Requirement
 All materials in this repository are licensed under a [Creative Commons Attribution 3.0 License](http://creativecommons.org/licenses/by/3.0/).
